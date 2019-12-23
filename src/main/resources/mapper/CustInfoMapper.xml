@@ -1,0 +1,26 @@
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cy.dao.CustInfoDao">
+    <select id="queryCustInfoList" resultType="CustInfo" parameterType="String">
+        SELECT
+        t.CUST_NUM,
+        t.CUST_ALIAS,
+        t.CUST_NAME,
+        t.CUST_SEX,
+        t.CUST_BIRTH,
+        t.CUST_CERTNUM,
+        t.CUST_PHONE,
+        t.CUST_PASSPORT,
+        t.CUST_REGI_DATE,
+        t.ENGLISH_NAME
+        FROM
+        MI_CUST_INFO t
+        <where>
+            <if test="custNum != null and custNum != ''">
+                and t.CUST_NUM = #{custNum}
+            </if>
+        </where>
+    </select>
+
+</mapper>
