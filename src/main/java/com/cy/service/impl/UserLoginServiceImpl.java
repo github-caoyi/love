@@ -13,12 +13,14 @@ public class UserLoginServiceImpl implements UserLoginService {
 
     @Override
     public boolean loginIn(String userName, String password) {
+        boolean result;
         int countUser = userLoginDao.countUser(userName,password);
         if (countUser <1){
-            return false;
+            result = false;
         }else{
-            return true;
+            result = true;
         }
-        //return false;
+        return result;
     }
+
 }

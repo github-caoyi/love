@@ -1,8 +1,11 @@
 package com.cy.controller;
 
 import com.cy.service.UserLoginService;
+import com.cy.service.impl.UserLoginServiceImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -17,9 +20,11 @@ import java.util.Map;
  * @Description 用户登陆
  * @Version 1.0
  **/
+@Controller
 public class UserLoginAction {
     private static final Logger logger = LoggerFactory.getLogger(UserLoginAction.class);
-    private UserLoginService userLoginService;
+    @Autowired
+    private UserLoginService userLoginService ;
     
     
     
@@ -41,10 +46,17 @@ public class UserLoginAction {
             String password = paraMap.get("password").toString();
             logger.info("用户名："+userName);
             if(userName != null && !userName.isEmpty() && password != null && !password.isEmpty()){
-                userLoginService.loginIn(userName,password);
+                if (userLoginService.loginIn(userName,password)){
+                    result.put("message","登陆成功!");
+                }
+                else{
+                    result.put("message","登陆失败!");
+                }
             }else{
+                result.put("message","请输入用户名和密码!");
             }
         } catch (Exception e) {
+            result.put("message","登陆出错!");
             e.printStackTrace();
         }
         return result;
