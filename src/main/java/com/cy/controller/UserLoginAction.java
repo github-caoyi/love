@@ -24,10 +24,6 @@ public class UserLoginAction {
     private static final Logger logger = LoggerFactory.getLogger(UserLoginAction.class);
     @Autowired
     private UserLoginService userLoginService ;
-
-
-
-
     /**
      * @Author cy
      * @Date 2019/12/23 16:26
@@ -56,6 +52,7 @@ public class UserLoginAction {
             }
         } catch (Exception e) {
             result.put("message","登陆出错!");
+            logger.error("登陆出错："+e.getMessage());
             e.printStackTrace();
         }
         return result;
