@@ -1,6 +1,7 @@
 package com.cy.controller;
 
 import com.cy.service.UserLoginService;
+import com.cy.system.util.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import java.util.HashMap;
 import java.util.Map;
 
 
@@ -22,6 +22,7 @@ import java.util.Map;
 @Controller
 public class UserLoginAction {
     private static final Logger logger = LoggerFactory.getLogger(UserLoginAction.class);
+    private Result result ;
     @Autowired
     private UserLoginService userLoginService ;
     /**
@@ -33,8 +34,8 @@ public class UserLoginAction {
      **/
     @RequestMapping("/action_loginin")
     @ResponseBody
-    public Map<String,Object> loginIn(@RequestBody Map<String,Object> paraMap){
-        Map<String,Object> result = new HashMap<>();
+    public Result loginIn(@RequestBody Map<String,Object> paraMap){
+        Result result;
         try {
             logger.info("用户开始登录----------");
             String userName = paraMap.get("userName").toString();
@@ -42,18 +43,17 @@ public class UserLoginAction {
             logger.info("用户名："+userName);
             if(userName != null && !userName.isEmpty() && password != null && !password.isEmpty()){
                 if (userLoginService.loginIn(userName,password)){
-                    result.put("message","登陆成功!");
+                    result = new Result(Constans.CODE_SUCCESS,Constans.MSG_SUCCESS,null);
                 }
                 else{
-                    result.put("message","登陆失败!");
+                    result = new Result(Constans.CODE_FAIL,Constans.MSG_FAIL,null);
                 }
             }else{
-                result.put("message","请输入用户名和密码!");
+                result = new Result(Constans.CODE_FAIL,Constans.MSG_FAIL,null);
             }
         } catch (Exception e) {
-            result.put("message","登陆出错!");
+            result = new Result(Constans.CODE_FAIL,Constans.MSG_FAIL,null);
             logger.error("登陆出错："+e.getMessage());
-            e.printStackTrace();
         }
         return result;
     }
