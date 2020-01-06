@@ -16,7 +16,7 @@ public class Result {
     /**
      * @Author cy
      * @Date 2020/1/6 15:58
-     * @Description 响应结果的无参构造器 响应码默认为“0”，响应内容默认为“交易成功”，响应数据默认为“null”
+     * @Description 响应结果的无参构造器
      * @Param
      * @return
      **/
