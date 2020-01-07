@@ -21,6 +21,7 @@ import java.util.Map;
  * @Version 1.0
  **/
 @Controller
+@RequestMapping("/userlogin")
 public class UserLoginAction {
     private static final Logger logger = LoggerFactory.getLogger(UserLoginAction.class);
     private Result result ;
@@ -33,10 +34,10 @@ public class UserLoginAction {
      * @Param 
      * @return 
      **/
-    @RequestMapping("/action_loginin")
+    @RequestMapping("/loginin")
     @ResponseBody
     public Result loginIn(@RequestBody Map<String,Object> paraMap){
-        Result result;
+        Result result = null;
         try {
             logger.info("用户开始登录----------");
             String userName = paraMap.get("userName").toString();
