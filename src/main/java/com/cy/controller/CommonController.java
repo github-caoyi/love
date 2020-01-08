@@ -25,7 +25,7 @@ public class CommonController {
      * @return
      * @Author cy
      * @Date 2020/1/7 15:41
-     * @Description 通用上传请求
+     * @Description 通用文件上传请求
      * @Param
      **/
     @PostMapping("/common/upload")
