@@ -46,5 +46,10 @@
         <mvc:mapping path="/**" />
     </mvc:cors>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="defaultEncoding" value="utf-8"/>
+        <property name="maxUploadSize" value="#{1024*1024}"/>
+        <property name="resolveLazily" value="true"/>
+    </bean>
 
 </beans>

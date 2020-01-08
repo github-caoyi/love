@@ -4,6 +4,7 @@ import com.cy.system.util.StringUtils;
 import org.apache.commons.io.FilenameUtils;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -86,10 +87,15 @@ public class FileUploadUtils {
         int fileNameLength = file.getOriginalFilename().length();
         if(fileNameLength > FileUploadUtils.DEFAULT_FILE_NAME_MAX_LENGTH){
             //超出文件名称最大长度
+            throw new IOException("超出文件名称最大长度");
         }
+        //校验文件大小
 //        assertAllowed(file,allowedExtension);
         String fileName =extractFileName(file);
-        //
+        //本地存储
+        File desc = getAbsoluteFile(baseDir, fileName);
+        file.transferTo(desc);
+
         String pathFileName = baseDir+fileName;
         return pathFileName;
     }
@@ -121,5 +127,25 @@ public class FileUploadUtils {
         }
         return extension;
     }
+    /**
+     * @Author cy
+     * @Date 2020/1/8 11:06
+     * @Description 保存文件
+     * @Param 
+     * @return 
+     **/
+    private static final File getAbsoluteFile(String uploadDir, String fileName) throws IOException
+    {
+        File desc = new File(uploadDir + File.separator + fileName);
 
+        if (!desc.getParentFile().exists())
+        {
+            desc.getParentFile().mkdirs();
+        }
+        if (!desc.exists())
+        {
+            desc.createNewFile();
+        }
+        return desc;
+    }
 }
